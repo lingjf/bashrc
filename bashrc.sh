@@ -69,10 +69,9 @@ if [[ $(uname) =~ "Darwin" ]]; then
         alias r='rmtrash'
 elif [[ $(uname) =~ "Linux" ]]; then
         alias xclip='xclip -selection clipboard'
-        mkdir -p ~/.Trash
         function r() {
-                mv -f $1 ~/.Trash/$(basename $1)$(date +'____%Y%m%d%H%m%S')
-                find ~/.Trash/ -ctime 7 -name "*" -exec /bin/rm {} \;
+                trash-put $1
+                trash-empty 7
         }
 else
         echo ""

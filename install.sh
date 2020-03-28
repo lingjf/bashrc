@@ -3,6 +3,9 @@
 if [[ $1 == "full" ]]; then
         git clone git://github.com/joelthelion/autojump.git autojump
         cd autojump && ./install.py && cd - && \rm -rf autojump
+
+        git clone https://github.com/andreafrancia/trash-cli.git trash-cli
+        cd trash-cli && python setup.py install --user && cd - && \rm -rf trash-cli
 fi
 
 if [[ $(uname) =~ "Darwin" ]]; then
