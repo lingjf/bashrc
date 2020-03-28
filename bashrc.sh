@@ -166,6 +166,10 @@ function gco() {
         git checkout $*
 }
 
+function gic() {
+        git icdiff $*
+}
+
 function gxx() {
         git clean -fd
 }
@@ -203,6 +207,8 @@ function calc() {
         echo "$*" | tr 'x' '*' | bc -l
 }
 
+############################################################
+# compress and uncompress
 function x() {
         if [ -f $1 ]; then
                 case $1 in

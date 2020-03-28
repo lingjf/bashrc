@@ -6,6 +6,9 @@ if [[ $1 == "full" ]]; then
 
         git clone https://github.com/andreafrancia/trash-cli.git trash-cli
         cd trash-cli && python setup.py install --user && cd - && \rm -rf trash-cli
+
+        git clone git://github.com/mooz/percol.git percol
+        cd percol && python setup.py install && cd - && \rm -rf percol
 fi
 
 if [[ $(uname) =~ "Darwin" ]]; then
