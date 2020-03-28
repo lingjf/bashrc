@@ -19,13 +19,12 @@ echo "https://github.com/lingjf/bashrc.git"
 # 46 设置青色背景
 # 47 设置白色背景
 
-function prompt_symbol() {
+function __prompt_symbol() {
         # echo "♩ ♪ ♫ ♬ ♭ "
         # echo "☯ ⚛ ☢ ☣ ☠ ☺ "
         # echo "☪ ☭ "
         # echo "↓ ↑ ← → ↖ ↘ ↗ ↙ ✎ ✏ ✐ ➤ "
         # echo "♂ ♀ "
-        # echo "⅓ ⅔ "
         # echo "╳ ╱ ╲ │ ┆ ┊ ‖ ∥ ∵ ∷ … ‥ "
         # echo "㊣⊕※¤⊙◎◢◣◤◥□■◇◆△▲▽▼○●★☆"
         # echo "▁▂▃▄▅▆▇█▉▊▋▌▍▎〓━"
@@ -35,24 +34,25 @@ function prompt_symbol() {
         # echo "＄￥￠￡"
         # echo "℃ ㎜ ㎝ ㎡ ㎏ 〒 ℉ ㏕ ㎎ ㏄ ○"
         # echo "αβγδεζηθικλμνξοπρστυφχψω"
-        # echo "√×÷± ≈≠ ≌≡ ≦≧ ≤≥ ≮≯ ∧∨ ∑∏∫∬∮ ∝∞ ∊∍∈∋∃ ⌒ ∪ ㏒ ㏑"
+        # echo "√×÷± ≈≠ ≌≡ ≦≧ ≤≥ ≮≯ ∧∨ ∑∏∫∬∮ ∝∞ ∊∍∈∋∃ ⌒ ∪ ㏒ ㏑ ⅓ ⅔ "
         echo "➤"
 }
 
-function today_week() {
+function __today_week() {
         # weeks="①②③④⑤⑥⑦⑧⑨⑩"
         # weeks="❶❷❸❹❺❻❼❽❾❿"
-        weeks="㈠㈡㈢㈣㈤㈥㈦㈧㈨㈩"
-        echo ${weeks:$(date +"%u")-1:1}
+        # weeks="㈠㈡㈢㈣㈤㈥㈦㈧㈨㈩"
+        # echo ${weeks:$(date +"%u")-1:1}
+        echo ""
 }
 
 if [[ $SHELL == */zsh ]]; then
-        PROMPT='$(today_week)%* %~%{$fg_bold[red]%}$(prompt_symbol)%{$reset_color%} '
+        PROMPT='$(__today_week)%* %~%{$fg_bold[red]%}$(__prompt_symbol)%{$reset_color%} '
         #如果连续输入的命令相同，历史纪录中只保留一个
         setopt HIST_IGNORE_DUPS
         setopt HIST_IGNORE_ALL_DUPS
 else
-        export PS1='$(today_week)\t ${USER} \w\[\e[0;32;40m\]$(prompt_symbol)\[\e[0m\] '
+        export PS1='$(__today_week)\t ${USER} \w\[\e[0;32;40m\]$(__prompt_symbol)\[\e[0m\] '
 fi
 
 export HISTCONTROL=ignoreboth #erasedups:ignorespace
@@ -144,43 +144,20 @@ alias p3=python3
 
 ############################################################
 # git
-alias git='LANG=en_GB git'
+alias git="LANG=en_GB git"
 
-function gst() {
-        git status
-}
+alias gs="git status"
+alias gl="git pull"
+alias gu="git push"
 
-function gbr() {
-        git branch
-}
-
-function glg() {
-        git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-}
-
-function gls() {
-        git log --pretty=format:'%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%cn]' --decorate --date=short
-}
-
-function gci() {
-        git commit -am "$*"
-}
-
-function gco() {
-        git checkout $*
-}
-
-function gic() {
-        git icdiff $*
-}
-
-function gxx() {
-        git clean -fd
-}
-
-function gxxx() {
-        git clean -fdx
-}
+alias gst="git status"
+alias gbr="git branch"
+alias gco="git checkout"
+alias gci="git commit -am"
+alias gic="git icdiff"
+alias gfd="git clean -fd"
+alias gfdx="git clean -fdx"
+alias gls="git log --pretty=format:'%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%cn]' --decorate --date=short"
 
 ############################################################
 # br
@@ -213,24 +190,69 @@ function calc() {
 
 ############################################################
 # compress and uncompress
+
+function __x_uncompress() {
+        case $1 in
+        *.tar.bz2) tar xjf $1 ;;
+        *.tar.gz) tar xzf $1 ;;
+        *.bz2) bunzip2 $1 ;;
+        *.rar) rar x $1 ;;
+        *.gz) gunzip $1 ;;
+        *.tar) tar xf $1 ;;
+        *.tbz2) tar xjf $1 ;;
+        *.tgz) tar xzf $1 ;;
+        *.zip) unzip $1 ;;
+        *.Z) uncompress $1 ;;
+        *) echo "'$1' cannot be extracted via x" ;;
+        esac
+}
+
+function __x_compress() {
+        case $1 in
+        *.tar.bz2) tar cjf $1 $2 ;;
+        *.tar.gz) tar czf $1 $2 ;;
+        *.bz2) bzip2 -c $2 >$1 ;;
+        *.rar) rar a $1 $2 ;;
+        *.gz) gzip -c -r $2 >$1 ;;
+        *.tar) tar cf $1 $2 ;;
+        *.tbz2) tar cjf $1 $2 ;;
+        *.tgz) tar czf $1 $2 ;;
+        *.zip) zip -r $1 $2 ;;
+        *.Z) compress -c -r $2 >$1 ;;
+        *) echo "'$1' cannot be compressed via x" ;;
+        esac
+}
+
 function x() {
-        if [ -f $1 ]; then
+        case $# in
+        0) ;;
+        1)
+                if [ -f $1 ]; then
+                        __x_uncompress $1
+                fi
+                ;;
+        *)
+                x_to=$1
+                x_from=$2
                 case $1 in
-                *.tar.bz2) tar xjf $1 ;;
-                *.tar.gz) tar xzf $1 ;;
-                *.bz2) bunzip2 $1 ;;
-                *.rar) rar x $1 ;;
-                *.gz) gunzip $1 ;;
-                *.tar) tar xf $1 ;;
-                *.tbz2) tar xjf $1 ;;
-                *.tgz) tar xzf $1 ;;
-                *.zip) unzip $1 ;;
-                *.Z) uncompress $1 ;;
-                *) echo "'$1' cannot be extracted via x()" ;;
+                *.tar.bz2) ;;
+                *.tar.gz) ;;
+                *.bz2) ;;
+                *.rar) ;;
+                *.gz) ;;
+                *.tar) ;;
+                *.tbz2) ;;
+                *.tgz) ;;
+                *.zip) ;;
+                *.Z) ;;
+                *)
+                        x_to=$2
+                        x_from=$1
+                        ;;
                 esac
-        else
-                echo "'$1' is not a valid file"
-        fi
+                __x_compress $x_to $x_from
+                ;;
+        esac
 }
 
 function p() {
@@ -258,6 +280,6 @@ function v() {
         ssh jf@localhost -p 2222
 }
 
-function ss() {
+function s() {
         ssh ${2:-"lingjf"}@$1
 }
