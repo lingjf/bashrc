@@ -19,16 +19,36 @@ echo "https://github.com/lingjf/bashrc.git"
 # 46 设置青色背景
 # 47 设置白色背景
 
-function x1() {
-        echo "\u266C "
+function prompt_symbol() {
+        # echo "♩ ♪ ♫ ♬ ♭ "
+        # echo "☯ ⚛ ☢ ☣ ☠ ☺ "
+        # echo "☪ ☭ "
+        # echo "↓ ↑ ← → ↖ ↘ ↗ ↙ ✎ ✏ ✐ ➤ "
+        # echo "♂ ♀ "
+        # echo "⅓ ⅔ "
+        # echo "╳ ╱ ╲ │ ┆ ┊ ‖ ∥ ∵ ∷ … ‥ "
+        # echo "㊣⊕※¤⊙◎◢◣◤◥□■◇◆△▲▽▼○●★☆"
+        # echo "▁▂▃▄▅▆▇█▉▊▋▌▍▎〓━"
+        # echo "āáǎà ōóǒò ēéěè īíǐì ūúǔù ǖǘǚǜ ü ê ń ň"
+        # echo "① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩"
+        # echo "❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ❿"
+        # echo "㈠ ㈡ ㈢ ㈣ ㈤ ㈥ ㈦ ㈧ ㈨ ㈩ "
+        # echo "⒈ ⒉ ⒊ ⒋ ⒌ ⒍ ⒎ ⒏ ⒐ ⒑ ⒒ ⒓ ⒔ ⒕ ⒖ ⒗ ⒘ ⒙ ⒚ ⒛ "
+        # echo "⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂ ⒃ ⒄ ⒅ ⒆ ⒇ "
+        # echo "＄￥￠￡"
+        # echo "℃ ㎜ ㎝ ㎡ ㎏ 〒 ℉ ㏕ ㎎ ㏄ ○"
+        # echo "αβγδεζηθικλμνξοπρστυφχψω"
+        # echo "√×÷± ≈≠ ≌≡ ≦≧ ≤≥ ≮≯ ∧∨ ∑∏∫∬∮ ∝∞ ∊∍∈∋∃ ⌒ ∪ ㏒ ㏑"
+        echo "➤"
 }
+
 if [[ $SHELL == */zsh ]]; then
-        PROMPT='%* %~%{$fg_bold[red]%}$(x1)%{$reset_color%} '
+        PROMPT='%* %~%{$fg_bold[green]%}$(prompt_symbol)%{$reset_color%} '
         #如果连续输入的命令相同，历史纪录中只保留一个
         setopt HIST_IGNORE_DUPS
         setopt HIST_IGNORE_ALL_DUPS
 else
-        export PS1='\t ${USER} \w\[\e[0;32;40m\]\$\[\e[0m\] '
+        export PS1='\t ${USER} \w\[\e[0;32;40m\]$(prompt_symbol)\[\e[0m\] '
 fi
 
 export HISTCONTROL=ignoreboth #erasedups:ignorespace
