@@ -70,21 +70,55 @@ export SAVEHIST=10000
 
 ############################################################
 # cd
-alias ...='cd ../..'
-alias cd...='cd ../..'
-alias ....='cd ../../..'
-alias cd....='cd ../../..'
-alias .....='cd ../../../..'
-alias cd.....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias cd......='cd ../../../../..'
 
 function up() {
-        for i in $(seq 1 $1); do
-                cd ../
-        done
-}
+        if [ -z $(echo $1 | sed 's/[0-9]//g') ]; then
+                let n=$1
+        else
+                n=$(echo $1 | sed 's/[^.]//g' | wc -c)
+                let n=n-2
+        fi
 
+        case $n in
+        0) ;;
+        1) cd .. ;;
+        2) cd ../.. ;;
+        3) cd ../../.. ;;
+        4) cd ../../../.. ;;
+        5) cd ../../../../.. ;;
+        6) cd ../../../../../.. ;;
+        7) cd ../../../../../../.. ;;
+        8) cd ../../../../../../../.. ;;
+        9) cd ../../../../../../../../.. ;;
+        *)
+                while [ $n -gt 0 ]; do
+                        cd ..
+                        let n=n-1
+                done
+                ;;
+        esac
+}
+alias ..='up 1'
+alias ...='up 2'
+alias ....='up 3'
+alias .....='up 4'
+alias ......='up 5'
+alias .......='up 6'
+alias ........='up 7'
+alias .........='up 8'
+alias ..........='up 9'
+alias cd..='up 1'
+alias cd...='up 2'
+alias cd....='up 3'
+alias cd.....='up 4'
+alias cd......='up 5'
+alias cd.......='up 6'
+alias cd........='up 7'
+alias cd.........='up 8'
+alias cd..........='up 9'
+
+############################################################
+# rm
 if [[ $(uname) =~ "Darwin" ]]; then
         alias r='rmtrash'
 elif [[ $(uname) =~ "Linux" ]]; then
