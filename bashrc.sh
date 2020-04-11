@@ -273,6 +273,7 @@ function ssh_free() {
 function kl() {
         ps aux | grep $1 | grep -v grep | awk '{print $2}' | xargs kill -9
 }
+
 function pk() {
         ps aux | percol | awk '{print $2}' | xargs kill -9
 }
@@ -284,3 +285,5 @@ function v() {
 function s() {
         ssh ${2:-"lingjf"}@$1
 }
+
+alias select-version="sudo update-alternatives --config"
