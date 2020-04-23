@@ -286,4 +286,5 @@ function s() {
         ssh ${2:-"lingjf"}@$1
 }
 
-alias select-version="sudo update-alternatives --config"
+alias gcc-select="sudo update-alternatives --config gcc"
+alias g++-select="sudo update-alternatives --config g++"
