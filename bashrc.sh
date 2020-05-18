@@ -137,7 +137,9 @@ fi
 
 export PATH=$(pwd):$PATH
 
+alias c='cmake .'
 alias m='make -j 4'
+alias cm='make clean && cmake . && make -j 4'
 alias py=python
 alias p2=python
 alias p3=python3
