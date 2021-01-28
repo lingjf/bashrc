@@ -290,3 +290,5 @@ function s() {
 
 alias gcc-select="sudo update-alternatives --config gcc"
 alias g++-select="sudo update-alternatives --config g++"
+
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
