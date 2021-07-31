@@ -15,7 +15,7 @@ else
 fi
 
 if [[ $1 == "full" ]]; then
-        git clone git://github.com/joelthelion/autojump.git autojump
+        git clone git://github.com/wting/autojump.git autojump
         cd autojump && ./install.py && cd - && \rm -rf autojump
 
         git clone https://github.com/andreafrancia/trash-cli.git trash-cli
