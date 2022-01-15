@@ -137,9 +137,9 @@ fi
 
 export PATH=$(pwd):$PATH
 
-alias c='cmake .'
-alias m='make -j 4'
-alias cm='make clean && cmake . && make -j 4'
+alias c='make -j 4'
+alias cm='cmake . && make -j 4'
+alias cma='cmake . && make -j 4 && ./a.out'
 alias py=python
 alias p2=python
 alias p3=python3
@@ -287,6 +287,8 @@ function v() {
 function s() {
         ssh ${2:-"lingjf"}@$1
 }
+
+alias m='cmatrix -s'
 
 alias gcc-select="sudo update-alternatives --config gcc"
 alias g++-select="sudo update-alternatives --config g++"

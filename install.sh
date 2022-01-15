@@ -15,6 +15,9 @@ else
 fi
 
 if [[ $1 == "full" ]]; then
+        git clone https://github.com/abishekvashok/cmatrix.git
+        cd cmatrix && cmake . && make install
+
         git clone git://github.com/wting/autojump.git autojump
         cd autojump && ./install.py && cd - && \rm -rf autojump
 
